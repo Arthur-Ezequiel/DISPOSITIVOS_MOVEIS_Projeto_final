@@ -92,33 +92,52 @@ export default function criaturas() {
     return (
         <SafeAreaView style={styles.tela} edges={["bottom"]}>
             <Stack.Screen options={{ title: "Drifters" }} />
+            <View style={styles.perguntas}>
+                <Text style={styles.tituloPergunta}>
+                    Nome:
+                </Text>
 
-            <TextInput
-                style={styles.campo}
-                value={nome}
-                onChangeText={setNome}
-                placeholder="Nome da criatura"
-            />
-            <TextInput
-                style={styles.campo}
-                value={habitat}
-                onChangeText={setHabitat}
-                placeholder="Habitat da criatura"
-            />
-            <TextInput
-                style={styles.campo}
-                value={perigo}
-                onChangeText={setPerigo}
-                keyboardType="numeric"
-                placeholder="Nivel de perigo"
-            />
-            <TextInput
-                style={styles.campo}
-                value={poder}
-                onChangeText={setPoder}
-                placeholder="Poder especial"
-            />
+                <TextInput
+                    style={styles.campo}
+                    value={nome}
+                    onChangeText={setNome}
+                    placeholder="Nome da criatura"
+                />
 
+                <Text style={styles.tituloPergunta}>
+                    Habitat:
+                </Text>
+
+                <TextInput
+                    style={styles.campo}
+                    value={habitat}
+                    onChangeText={setHabitat}
+                    placeholder="Aonde pode spawnar"
+                />
+
+                <Text style={styles.tituloPergunta}>
+                    Nivel de perigo:
+                </Text>
+
+                <TextInput
+                    style={styles.campo}
+                    value={perigo}
+                    onChangeText={setPerigo}
+                    keyboardType="numeric"
+                    placeholder="Nivel de perigo"
+                />
+
+                <Text style={styles.tituloPergunta}>
+                    Poder especial:
+                </Text>
+
+                <TextInput
+                    style={styles.campo}
+                    value={poder}
+                    onChangeText={setPoder}
+                    placeholder="Fogo, Resistencia, Arremeçar ...."
+                />
+            </View>
             <Button title="Salvar Criatura" onPress={salvarCriaturas} />
 
 
@@ -127,44 +146,46 @@ export default function criaturas() {
                 data={bixo}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <View style={styles.cartao}>
+                    <View style={styles.espacamento}>
+                        <View style={styles.cartao}>
 
-                        <View style={styles.informacoes}>
-                            <Text style={styles.item}>
-                                {item.nome}
-                            </Text>
+                            <View style={styles.informacoes}>
+                                <Text style={styles.item}>
+                                    {item.nome}
+                                </Text>
 
-                            <Text style={styles.detalhes}>
-                                ID: {item.id}
-                            </Text>
+                                <Text style={styles.detalhes}>
+                                    ID: {item.id}
+                                </Text>
 
-                            <Text style={styles.detalhes}>
-                                Habitat: {item.habitat}
-                            </Text>
+                                <Text style={styles.detalhes}>
+                                    Habitat: {item.habitat}
+                                </Text>
 
-                            <Text style={styles.detalhes}>
-                                Perigo: {item.perigo}
-                            </Text>
+                                <Text style={styles.detalhes}>
+                                    Perigo: {item.perigo}
+                                </Text>
 
-                            <Text style={styles.detalhes}>
-                                Poder: {item.poder}
-                            </Text>
+                                <Text style={styles.detalhes}>
+                                    Poder: {item.poder}
+                                </Text>
+                            </View>
+
+                            <View style={styles.botoes}>
+                                <Button
+                                    title="Editar"
+                                    color="#596348"
+                                    onPress={() => editar(item)}
+                                />
+
+                                <Button
+                                    title="Excluir"
+                                    color="#873F32"
+                                    onPress={() => deletar(item.id)}
+                                />
+                            </View>
+
                         </View>
-
-                        <View style={styles.botoes}>
-                            <Button
-                                title="Editar"
-                                color="#2354D6"
-                                onPress={() => editar(item)}
-                            />
-
-                            <Button
-                                title="Excluir"
-                                color="#D62828"
-                                onPress={() => deletar(item.id)}
-                            />
-                        </View>
-
                     </View>
                 )}
             />
@@ -173,14 +194,39 @@ export default function criaturas() {
     );
 }
 const styles = StyleSheet.create({
+    tela: {
+        flex: 1,
+        backgroundColor: "#25231F",
+    },
+
+    perguntas: {
+        backgroundColor: "#25231F",
+        padding: 16,
+    },
+
+    tituloPergunta: {
+        color: "#D8C9A7",
+        fontSize: 16,
+        marginTop: 5,
+    },
+
+    campo: {
+        backgroundColor: "#D8C9A7",
+        color: "#25231F",
+        borderWidth: 1,
+        borderColor: "#A66D3F",
+        borderRadius: 10,
+        padding: 12,
+        fontSize: 16,
+    },
+
     cartao: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "#F1F3F6",
+        backgroundColor: "#D8C9A7",
         borderRadius: 12,
         padding: 12,
-        marginBottom: 10,
     },
 
     informacoes: {
@@ -191,18 +237,30 @@ const styles = StyleSheet.create({
     item: {
         fontSize: 17,
         fontWeight: "bold",
-        color: "#111827",
+        color: "#25231F",
         marginBottom: 6,
     },
 
     detalhes: {
         fontSize: 14,
-        color: "#4B5563",
+        color: "#493729",
         marginBottom: 3,
     },
 
     botoes: {
         justifyContent: "center",
         gap: 8,
+    },
+
+    espacamento: {
+        backgroundColor: "#25231F",
+        paddingHorizontal: 16,
+        paddingTop: 10,
+        paddingBottom: 5,
+    },
+
+    lista: {
+        flex: 1,
+        backgroundColor: "#25231F",
     },
 });

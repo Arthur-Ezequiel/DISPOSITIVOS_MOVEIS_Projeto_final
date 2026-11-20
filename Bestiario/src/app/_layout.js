@@ -6,18 +6,18 @@ export default function Layout() {
         <SafeAreaProvider>
             <Stack
                 screenOptions={{
-                    headerStyle: { backgroundColor: "#47d623" },
+                    headerStyle: { backgroundColor: "#493729" },
                     headerTintColor: "#FFFFFF",
                 }}
             >
                 <Stack.Screen
-                    name="asdads"
+                    name="index"
                     options={{ title: "Início" }}
                 />
 
                 <Stack.Screen
-                    name="bestiario"
-                    options={{ title: "Criaturas ---" }}
+                    name="Drifters"
+                    options={{ title: "Drifters" }}
                 />
             </Stack>
         </SafeAreaProvider>
