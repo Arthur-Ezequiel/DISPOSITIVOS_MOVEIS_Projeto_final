@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Button, Pressable, FlatList, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, Pressable, FlatList, TextInput, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, Stack } from "expo-router";
 
@@ -11,6 +11,7 @@ export default function criaturas() {
     const [perigo, setPerigo] = useState("");
     const [poder, setPoder] = useState("");
     const [idEditando, setIdEditando] = useState(0);
+    const [imagem, setImagem] = useState("");
 
     async function buscarCriaturas() {
         const resposta = await fetch(
@@ -48,6 +49,7 @@ export default function criaturas() {
                     habitat: habitat,
                     perigo: nivelPerigo,
                     poder: poder,
+                    imagem: imagem,
                 }),
             });
 
@@ -61,6 +63,7 @@ export default function criaturas() {
                     habitat: habitat,
                     perigo: nivelPerigo,
                     poder: poder,
+                    imagem: imagem,
                 }),
             });
 
@@ -71,6 +74,7 @@ export default function criaturas() {
         setPerigo("");
         setPoder("");
         setIdEditando(0);
+        setImagem("");
 
         buscarCriaturas();
     }
@@ -88,7 +92,9 @@ export default function criaturas() {
         setPerigo(String(item.perigo));
         setPoder(item.poder);
         setIdEditando(item.id);
+        setImagem(item.imagem || "");
     }
+
     return (
         <SafeAreaView style={styles.tela} edges={["bottom"]}>
             <Stack.Screen options={{ title: "Drifters" }} />
@@ -137,6 +143,17 @@ export default function criaturas() {
                     onChangeText={setPoder}
                     placeholder="Fogo, Resistencia, Arremeçar ...."
                 />
+
+                <Text style={styles.tituloPergunta}>
+                    Imagem:
+                </Text>
+
+                <TextInput
+                    style={styles.campo}
+                    value={imagem}
+                    onChangeText={setImagem}
+                    placeholder="Link da imagem"
+                />
             </View>
             <Button title="Salvar Criatura" onPress={salvarCriaturas} />
 
@@ -148,6 +165,14 @@ export default function criaturas() {
                 renderItem={({ item }) => (
                     <View style={styles.espacamento}>
                         <View style={styles.cartao}>
+
+                            {item.imagem && (
+                                <Image
+                                    source={{ uri: item.imagem }}
+                                    style={styles.imagem}
+                                    resizeMode="cover"
+                                />
+                            )}
 
                             <View style={styles.informacoes}>
                                 <Text style={styles.item}>
@@ -263,4 +288,23 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#25231F",
     },
+
+    imagem: {
+        width: 100,
+        height: 120,
+        borderRadius: 10,
+        marginRight: 12,
+        backgroundColor: "#493729",
+    },
+
+    semImagem: {
+        width: 100,
+        height: 120,
+        borderRadius: 10,
+        marginRight: 12,
+        backgroundColor: "#493729",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
 });
