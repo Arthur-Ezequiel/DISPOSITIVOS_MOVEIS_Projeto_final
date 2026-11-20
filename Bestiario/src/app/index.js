@@ -10,6 +10,7 @@ export default function criaturas() {
     const [habitat, setHabitat] = useState("");
     const [perigo, setPerigo] = useState("");
     const [poder, setPoder] = useState("");
+    const [idEditando, setIdEditando] = useState(0);
 
     async function buscarCriaturas() {
         const resposta = await fetch(
@@ -20,28 +21,63 @@ export default function criaturas() {
     }
 
     async function salvarCriaturas() {
-        await fetch("https://6afce76c2a9c141d36b7d734.mockapi.io/criaturas", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                nome: nome,
-                habitat: habitat,
-                perigo: perigo,
-                poder: poder,
-            }),
-        });
+
+        // VALIDAÇÃO
+        if (nome.trim() === "" || habitat.trim() === "" || perigo.trim() === "") {
+            alert("Preencha nome, habitat e perigo!");
+            return;
+        }
+
+        const nivelPerigo = Number(perigo);
+
+        if (nivelPerigo < 1 || nivelPerigo > 5 || !Number.isInteger(nivelPerigo)) {
+            alert("O perigo deve ser um número inteiro entre 1 e 5!");
+            return;
+        }
+
+        if (idEditando === 0) {
+
+            await fetch("https://6afce76c2a9c141d36b7d734.mockapi.io/criaturas", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    nome: nome,
+                    habitat: habitat,
+                    perigo: nivelPerigo,
+                    poder: poder,
+                }),
+            });
+
+        } else {
+
+            await fetch("https://6afce76c2a9c141d36b7d734.mockapi.io/criaturas/" + idEditando, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    nome: nome,
+                    habitat: habitat,
+                    perigo: nivelPerigo,
+                    poder: poder,
+                }),
+            });
+
+        }
+
         setNome("");
         setHabitat("");
         setPerigo("");
         setPoder("");
+        setIdEditando(0);
 
         buscarCriaturas();
     }
+    async function deletar(id) {
+        await fetch(`https://6afce76c2a9c141d36b7d734.mockapi.io/criaturas/${id}`, {
+            method: "DELETE",
+        });
 
-    useEffect(() => {
         buscarCriaturas();
-    }, []);
-
+    }
     return (
         <SafeAreaView style={styles.tela} edges={["bottom"]}>
             <Stack.Screen options={{ title: "Criaturas ---" }} />
