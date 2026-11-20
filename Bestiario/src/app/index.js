@@ -86,36 +86,6 @@ export default function criaturas() {
         </SafeAreaView>
     );
 }
-
 const styles = StyleSheet.create({
-    tela: {
-        flex: 1,
-        backgroundColor: "#FFFFFF",
-        paddingHorizontal: 16,
-        paddingTop: 16,
-    },
 
-    campo: {
-        borderWidth: 1,
-        borderColor: "#D9DDE3",
-        borderRadius: 12,
-        padding: 12,
-        fontSize: 16,
-        color: "#111827",
-        marginBottom: 12,
-    },
-
-    lista: {
-        flex: 1,
-        marginTop: 16,
-    },
-
-    item: {
-        backgroundColor: "#F1F3F6",
-        borderRadius: 12,
-        padding: 16,
-        marginBottom: 8,
-        fontSize: 15,
-        color: "#111827",
-    },
 });
